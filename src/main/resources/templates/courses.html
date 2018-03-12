@@ -17,6 +17,44 @@
 		</h2>
 	</div>
 	
+	<form method="POST">
+		<div>
+			<label>Enter Course Name:</label>
+			<input type="text" name="name" />
+		</div>
+		<div>
+			<label>Enter Course Description:</label>
+			<input type="text" name="description" />
+		</div>
+		<div>
+			<label>Enter Instructor:</label>
+			<input type="text" name="instructorName" />
+		</div>
+		<div>
+		<button th:formaction="@{/add-course}"> add course</button>
+		</div>
+	</form>
+	
+	<form method="POST">
+		<div>
+			<label>Enter Course Name:</label>
+			<input type="text" name="name" />
+		</div>
+		<div>
+		<button th:formaction="@{/remove-course}"> remove course</button>
+		</div>
+    </form>
+    
+    <form method="POST">
+		<div>
+			<label>Enter Instructor:</label>
+			<input type="text" name="instructorName" />
+		</div>
+		<div>
+		<button th:formaction="@{/find-by-instructor}"> find courses</button>
+		</div>
+    </form>
+	
 	
 
 </body>

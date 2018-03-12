@@ -3,6 +3,7 @@ package org.wecancodeit.courses;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Course {
@@ -13,7 +14,8 @@ public class Course {
 	private String name;
 	private String description;
 
-	private String instructor;
+	@ManyToOne
+	private Instructor instructor;
 
 	public Long getId() {
 		return id;
@@ -23,7 +25,7 @@ public class Course {
 		return name;
 	}
 
-	public String getInstructor() {
+	public Instructor getInstructor() {
 		return instructor;
 	}
 
@@ -35,7 +37,7 @@ public class Course {
 
 	}
 
-	public Course(String name, String description, String instructor) {
+	public Course(String name, String description, Instructor instructor) {
 		this.name = name;
 		this.description = description;
 		this.instructor = instructor;
