@@ -1,3 +1,4 @@
+
 package org.wecancodeit.courses;
 
 import javax.annotation.Resource;
@@ -5,6 +6,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -48,17 +50,43 @@ public class CourseController {
 		Course courseToRemove = courseRepo.findByName(name);
 		if (courseRepo.findByName(name) != null) {
 			courseRepo.delete(courseToRemove);
-			return "redirect:/show-courses";
+		}
+		return "redirect:/show-courses";
+	}
+
+	@RequestMapping("/delete-course")
+	public String deleteCourses(String courseName) {
+
+		if (courseRepo.findByName(courseName) != null) {
+			Course deletedCourse = courseRepo.findByName(courseName);
+			courseRepo.delete(deletedCourse);
+
 		}
 
 		return "redirect:/show-courses";
 	}
 
+	@RequestMapping(value = "/del-course", method = RequestMethod.POST)
+	public String deleteCourses(Long id) {
+		
+		courseRepo.delete(id);
+		
+		return "redirect:/show-courses";
+	}
+	
 	@RequestMapping("find-by-instructor")
 	public String findCoursesByInstructor(String instructorName, Model model) {
 		Instructor instructor = instructorRepo.findByName(instructorName);
 		model.addAttribute("courses", courseRepo.findByInstructor(instructor));
 		return "/instructor";
+	}
+
+
+	@RequestMapping("/sort-courses")
+	public String sortAllCourses(Model model) {
+		model.addAttribute("courses", courseRepo.findAllByOrderByNameAsc());
+		return "courses";
+
 	}
 
 }
