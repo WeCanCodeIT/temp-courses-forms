@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -14,8 +15,16 @@ public class CourseRestController {
 	private CourseRepository repo;
 
 	@RequestMapping("")
-	public Iterable<Course> findAllCourses() {
-		return repo.findAll();
+	public Iterable<Course> findAllCourses(@RequestParam(defaultValue = "") String search,
+			@RequestParam(defaultValue = "") String advanced) {
+		if (search.isEmpty()) {
+			if (advanced.isEmpty()) {
+				return repo.findAll();
+			}
+			return repo.findByDescriptionIgnoreCaseLike(advanced.replace('*', '%'));
+		}
+
+		return repo.findByDescriptionIgnoreCaseContains(search);
 	}
 
 	@RequestMapping("/{id}")
