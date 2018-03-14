@@ -7,12 +7,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/courses")
 public class CourseRestController {
 
 	@Resource
 	private CourseRepository repo;
 
-	@RequestMapping("/courses/{id}")
+	@RequestMapping("")
+	public Iterable<Course> findAllCourses() {
+		return repo.findAll();
+	}
+
+	@RequestMapping("/{id}")
 	public Course findOneCourse(@PathVariable long id) {
 		return repo.findOne(id);
 	}
