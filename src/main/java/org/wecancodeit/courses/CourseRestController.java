@@ -16,7 +16,7 @@ public class CourseRestController {
 
 	@RequestMapping("")
 	public Iterable<Course> findAllCourses(@RequestParam(defaultValue = "") String search,
-			@RequestParam(defaultValue = "") String advanced) {
+			@RequestParam(defaultValue = "") String advanced) throws InterruptedException {
 		if (search.isEmpty()) {
 			if (advanced.isEmpty()) {
 				return repo.findAll();
