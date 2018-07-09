@@ -31,6 +31,12 @@ public class CourseController {
 		return "redirect:/courses";
 	}
 
+	@RequestMapping(value = "/remove-course", method = RequestMethod.POST)
+	public String removeCourse(String deleteCourse) {
+		courseRepo.delete(courseRepo.findByName(deleteCourse));
+		return "redirect:/courses";
+	}
+
 	@RequestMapping("/courses/{id}")
 	public String course(@PathVariable(name = "id") Long id, Model model) {
 		model.addAttribute("course", courseRepo.findOne(id));
