@@ -14,12 +14,15 @@ public class CourseController {
 	@Resource
 	CourseRepository courseRepo;
 
+	@Resource
+	InstructorRepository instructorRepo;
+
 	@RequestMapping("/")
 	public String home() {
 		return "redirect:/courses";
 	}
 
-	@RequestMapping(value = "/courses", method = RequestMethod.GET)
+	@RequestMapping("/courses")
 	public String getCourses(Model model) {
 		model.addAttribute("courses", courseRepo.findAll());
 		return "courses";
@@ -27,7 +30,15 @@ public class CourseController {
 
 	@RequestMapping(value = "/courses", method = RequestMethod.POST)
 	public String addCourse(String courseName, String courseDescription, String courseInstructor) {
-		courseRepo.save(new Course(courseName, courseDescription, courseInstructor));
+		if (courseRepo.findByName(courseName) == null) {
+			Instructor instructor;
+			if (instructorRepo.findByName(courseInstructor) == null) {
+				instructor = instructorRepo.save(new Instructor(courseInstructor));
+			} else {
+				instructor = instructorRepo.findByName(courseInstructor);
+			}
+			courseRepo.save(new Course(courseName, courseDescription, instructor));
+		}
 		return "redirect:/courses";
 	}
 
