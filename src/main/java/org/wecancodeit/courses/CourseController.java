@@ -53,5 +53,10 @@ public class CourseController {
 		model.addAttribute("course", courseRepo.findOne(id));
 		return "course";
 	}
+	
+	@RequestMapping("/api-test")
+	public String populateApiData() {
+		return "api-test";
+	}
 
 }
