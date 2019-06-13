@@ -11,13 +11,30 @@
 		<h1>A List of Courses</h1>
 	</header>
 
-	<div th:each="course: ${courses}">
-		<h2>
-			<a th:href="@{/course(id=${course.id})}" th:text="${course.name}"></a>
-		</h2>
-	</div>
+	<main>
+		<h2>Courses</h2>
+		<ul>
+			<li th:each="course: ${courses}">
+				<a th:href="|@{/courses/}${course.id}|" th:text="${course.name}"></a>
+			</li>
+		</ul>
+		<hr />
+		<form action="/courses" method="POST">
+			<label>Course Name: <input type="text" name="courseName" /></label>
+			<label>Course Description: <input type="text" name="courseDescription" /></label>
+			<label>Course Instructor: <input type="text" name="courseInstructor" /></label>
+			<input type="submit" value="Submit" />
+		</form>
+		
+		<form action="/remove-course" method="POST">
+			<label>Course to delete: <input type="text" name="deleteCourse" /></label>
+			<input type="submit" value="Submit" />
+		</form>
+		<hr />
+	</main>
 	
-	
-
+	<footer>
+		<small>&copy; WCCI 2018</small>
+	</footer>
 </body>
 </html>
